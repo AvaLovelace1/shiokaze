@@ -50,9 +50,9 @@ protected:
 			}
 		} else {
 			assert( num_threads );
-			std::vector<tbb::tbb_thread> threads(num_threads);
+			std::vector<std::thread> threads(num_threads);
 			for( int q=0; q<num_threads; ++q ) {
-				threads[q] = tbb::tbb_thread([&]( int q ){
+				threads[q] = std::thread([&]( int q ){
 					size_t n = iterator_start(q);
 					do { func(n,q); } while( iterator_advance(n,q));
 				},q);
@@ -66,9 +66,9 @@ protected:
 		if( g_shkz_force_single_thread && *g_shkz_force_single_thread ) {
 			for( auto f : functions ) f();
 		} else {
-			std::vector<tbb::tbb_thread> threads(functions.size());
+			std::vector<std::thread> threads(functions.size());
 			for( int q=0; q<threads.size(); ++q ) {
-				threads[q] = tbb::tbb_thread([&](int q) { functions[q](); },q);
+				threads[q] = std::thread([&](int q) { functions[q](); },q);
 			}
 			for( auto& thread : threads ) thread.join();
 		}
