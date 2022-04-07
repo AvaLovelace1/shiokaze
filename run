@@ -22,13 +22,17 @@
 #	CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 #	OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-for d in $(find "build" -type d)
-do
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$d
-done
 if [ "$(uname)" == 'Darwin' ]; then
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/local/lib/macos
+    for d in $(find "build" -type d)
+    do
+        export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$d
+    done
+	export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$(pwd)/local/lib/macos
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+    for d in $(find "build" -type d)
+    do
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$d
+    done
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/local/lib/linux
 fi
 ./build/launcher/launcher "$@"
