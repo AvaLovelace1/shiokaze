@@ -5,3 +5,5 @@ html
 log_*
 docs/en/*
 docs/ja/*
+.*
+!/.gitignore
