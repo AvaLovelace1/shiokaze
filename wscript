@@ -149,7 +149,7 @@ def build(bld):
 def greeting(str):
 	rows, columns = os.popen('stty size', 'r').read().split()
 	count = len(str)
-	streamer_count = (greet_total-count-2)/2
+	streamer_count = (greet_total-count-2)//2
 	for i in range(streamer_count):
 		sys.stdout.write('-')
 	sys.stdout.write(' ')
@@ -160,7 +160,7 @@ def greeting(str):
 	sys.stdout.write('\n')
 #
 def message(str):
-	print str
+	print(str)
 #
 def greet_end():
 	for i in range(greet_total):
